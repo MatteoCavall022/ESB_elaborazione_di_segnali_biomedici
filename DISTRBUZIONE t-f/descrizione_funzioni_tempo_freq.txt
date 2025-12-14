@@ -1,0 +1,57 @@
+1. act.m
+Questa funzione calcola la funzione di autocorrelazione istantanea (auto-correlation time function) di un segnale, che è fondamentale per ottenere la rappresentazione tempo-frequenza.
+
+Quando usarla:
+Usala per prima, come punto di partenza per la rappresentazione tempo-frequenza. È il passo iniziale per costruire distribuzioni come Wigner-Ville o Choi-Williams.
+
+Cosa serve prima:
+Hai bisogno del segnale x e della finestra w (Hamming o altra finestra) da applicare localmente.
+
+2. cct.m
+Questa funzione calcola la cross-correlation time function tra due segnali. È utile per rappresentazioni tempo-frequenza cross, tra segnali diversi.
+
+Quando usarla:
+Solo se ti viene richiesto di confrontare due segnali nel dominio tempo-frequenza. Non ti serve per la Choi-Williams singola.
+
+3. daf.m
+Questa funzione calcola la funzione di ambiguità (DAF = Doppler-Ambiguity Function), che è la trasformata di Fourier della funzione di autocorrelazione istantanea rispetto al tempo.
+
+Quando usarla:
+Dopo act.m per ottenere la funzione di ambiguità. È lo step intermedio necessario per ottenere distribuzioni kernel-based (come Choi-Williams).
+
+Cosa serve prima:
+Devi aver già calcolato la funzione di autocorrelazione (act.m). Usa questa funzione per passare allo spazio Doppler-ritardo.
+
+4. dcw.m
+Questa funzione calcola la Distribuzione Choi-Williams vera e propria a partire dal segnale x, applicando il kernel di Choi-Williams sulla funzione di ambiguità e poi ritrasformando nel piano tempo-frequenza.
+
+Quando usarla:
+Quando vuoi ottenere direttamente la rappresentazione t-f Choi-Williams. Ti fa tutto in uno, partendo dal segnale.
+
+Cosa serve prima:
+Solo il segnale e il parametro sigma (controlla la selettività del kernel).
+
+5. kercw.m
+Questa funzione calcola il kernel di Choi-Williams per un dato valore di sigma.
+
+Quando usarla:
+Se vuoi personalizzare o studiare come cambia il kernel al variare di sigma prima di applicarlo alla funzione di ambiguità.
+
+Cosa serve prima:
+Serve una griglia tau-theta, di solito ottenuta nel calcolo della funzione di ambiguità (daf), perché sigma modula l’attenuazione in quell’ambiente.
+
+6. wig.m
+Questa funzione calcola la Distribuzione di Wigner-Ville (WVD), che è la trasformata di Fourier della funzione di autocorrelazione istantanea rispetto al ritardo (tau).
+
+Quando usarla:
+Per confrontare WVD con la distribuzione Choi-Williams (come ti chiede il pdf).
+La WVD ha alta risoluzione ma molti artefatti: serve come confronto qualitativo.
+
+Cosa serve prima:
+Solo il segnale x.
+
+FUNZIONE time_frequency
+- calcola wigner-ville
+_ Choi-Williams: calcola la funz auto ist, calcola la funzione ambiguità e la moltiplica per kernel, fa le trasformate per ritornare nel piano t-f
+- calcolo di solo la funzione di ambuìiguità
+-marginale in f e periodogramma semplice
